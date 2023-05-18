@@ -1,0 +1,11 @@
+db.sales.aggregate([
+  {
+    $group: {
+      _id: {
+        product: "$product",
+        category: "$category"
+      },
+      totalAmount: { $sum: "$amount" }
+    }
+  }
+]);

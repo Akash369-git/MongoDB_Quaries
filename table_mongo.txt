@@ -1,0 +1,53 @@
+db.createCollection("table1")
+db.createCollection("table2")
+db.createCollection("table3")
+
+db.table1.insertMany([
+  {
+    _id: 1,
+    field1: "Product A",
+    field2: "Category 1"
+  },
+  {
+    _id: 2,
+    field1: "Product B",
+    field2: "Category 2"
+  },
+  {
+    _id: 3,
+    field1: "Product C",
+    field2: "Category 1"
+  }
+])
+
+
+db.table2.insertMany([
+  {
+    _id: "Category 1",
+    field3: "Department X"
+  },
+  {
+    _id: "Category 2",
+    field3: "Department Y"
+  },
+  {
+    _id: "Category 3",
+    field3: "Department Z"
+  }
+])
+
+
+db.table3.insertMany([
+  {
+    _id: "Department X",
+    field4: "Location 1"
+  },
+  {
+    _id: "Department Y",
+    field4: "Location 2"
+  },
+  {
+    _id: "Department Z",
+    field4: "Location 3"
+  }
+])

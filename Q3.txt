@@ -1,0 +1,20 @@
+db.company.insertOne({
+  "name": "XYZ Company",
+  "employees": [
+    {
+      "name": "John Doe",
+      "position": "Manager"
+    },
+    {
+      "name": "Jane Smith",
+      "position": "Developer"
+    },
+    {
+      "name": "Michael Johnson",
+      "position": "Designer"
+    }
+  ]
+});
+
+
+db.company.find({ "employees.position": "Manager" });

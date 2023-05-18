@@ -1,0 +1,62 @@
+----------------UNION---------------------
+
+db.table1.aggregate([
+  {
+    $project: {
+      _id: 0,
+      field: "$field1"
+    }
+  },
+  {
+    $facet: {
+      union: [
+        { $project: { field: 1 } }  // Query on table1
+      ],
+      union2: [
+        { $lookup: { from: "table2", localField: "field", foreignField: "_id", as: "join_table2" } },  // Query on table2
+        { $unwind: "$join_table2" },
+        { $project: { field: "$join_table2.field2" } }
+      ],
+      union3: [
+        { $lookup: { from: "table3", localField: "field", foreignField: "_id", as: "join_table3" } },  // Query on table3
+        { $unwind: "$join_table3" },
+        { $project: { field: "$join_table3.field3" } }
+      ]
+    }
+  },
+  {
+    $project: {
+      result: { $setUnion: ["$union.field", "$union2.field", "$union3.field"] }
+    }
+  }
+]);
+
+
+-----------------INTERSECT------------------------
+
+db.collection.aggregate([
+  {
+    $group: {
+      _id: "$field",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $match: {
+      count: { $gt: 1 }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      intersection: { $addToSet: "$_id" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      intersection: { $setIntersection: ["$intersection"] }
+    }
+  }
+]);
+
